@@ -2,6 +2,7 @@ import { Telegraf } from 'telegraf';
 import db from './src/db/index.js';
 import { startNotifications, startExpirationWatcher } from './src/services/notificationService.js';
 import dotenv from 'dotenv';
+import { runMigrations } from './src/db/index.js';
 
 dotenv.config();
 
@@ -63,6 +64,8 @@ function initDatabase(callback) {
 
 initDatabase(() => {
   console.log('Starting services...');
+
+  runMigrations();
 
   // Cron-сервисы
   startNotifications(bot);
